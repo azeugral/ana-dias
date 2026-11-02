@@ -32,7 +32,7 @@ O material bruto (posts, destaques, folhas de contato) fica fora do repo, em `..
 6. **Disponíveis:** conferir quais desenhos ainda estão livres (o de R$ 6.000 ficou de fora porque mostrava preço).
 7. **Fotos de clientes:** as cicatrizadas vieram dos destaques. Confirmar se pode exibir.
 8. **Domínio:** a definir. Ao trocar, ajustar `og:image` no `tools/modelo.html` e tirar o `noindex` e o `robots.txt`.
-9. **Cache:** CSS e JS usam `?v=1`. Ao mudar, subir o número no modelo.
+9. **Cache:** CSS usa `?v=2` e JS `?v=1`. Ao mudar, subir o número no modelo.
 
 ---
 

@@ -161,9 +161,9 @@ p { margin: 0 0 1em; }
 .trilho-wrap { position: relative; }
 .trilho { list-style: none; padding: 0 0 4px; margin: 0; display: flex; gap: 12px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .trilho::-webkit-scrollbar { display: none; }
-.trilho li { flex: 0 0 clamp(150px, 17vw, 220px); scroll-snap-align: start; }
-.trilho img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; background: var(--papel-2); -webkit-user-drag: none; -webkit-touch-callout: none; user-select: none; }
-.trilho-disp li { flex-basis: clamp(200px, 22vw, 280px); }
+.trilho li { flex: 0 0 clamp(190px, 22vw, 290px); scroll-snap-align: start; }
+.trilho img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; background: var(--papel-2); -webkit-user-drag: none; -webkit-touch-callout: none; user-select: none; }
+.trilho-disp li { flex-basis: clamp(200px, 24vw, 310px); }
 .trilho-setas { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
 .seta-btn { width: 46px; height: 46px; border: 1px solid var(--linha); position: relative; transition: border-color .3s var(--curva), background-color .3s var(--curva); }
 .seta-btn:hover { border-color: var(--tinta); background: rgba(22, 19, 17, .04); }

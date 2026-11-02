@@ -53,8 +53,12 @@ HORAS = [
 SOBRE = [('038', 6, .85), ('038', 2, .4)]
 # recém-feita x cicatrizada (posts) e quadros do destaque Cicatrizadinhas
 CIC_POSTS = [('068', 1, .45), ('068', 2, .45)]
-CIC_HL = [17, 21, 24, 25, 26, 29, 31, 32, 30, 2, 11, 38]
-DISP_HL = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12]   # a 6 mostra preço antigo (R$ 6.000), fica de fora
+# Quadros dos destaques recortados em 4:5 fora dos textos e figurinhas do story.
+# (número, x, y, largura) na escala 360x640 do story; a altura é largura * 1,25.
+CIC_HL = [(17, 0, 20, 360), (21, 0, 15, 360), (24, 0, 190, 360), (25, 12, 88, 336), (26, 0, 110, 360), (29, 0, 30, 360),
+          (31, 0, 140, 360), (32, 0, 25, 360), (30, 0, 30, 360), (11, 0, 110, 360), (38, 0, 40, 360)]   # o 2 tem texto no meio
+DISP_HL = [(2, 65, 352, 230), (3, 92, 305, 268), (4, 0, 150, 360), (5, 0, 335, 244), (7, 0, 100, 240), (9, 0, 40, 360),
+           (11, 0, 80, 360), (12, 40, 310, 264)]   # 6 mostra preço antigo; 8 e 10 não têm área limpa grande
 
 def post(cod, k):
     return glob.glob(os.path.join(R, 'ig', f'{cod}_*_{k}*.jpg'))[0]
@@ -62,6 +66,10 @@ def post(cod, k):
 def recortar(src, w, h, dy=.5):
     im = ImageOps.exif_transpose(Image.open(src)).convert('RGB')
     return ImageOps.fit(im, (w, h), Image.LANCZOS, centering=(.5, dy))
+
+def story(src, x, y, w):
+    im = Image.open(src).convert('RGB'); k = im.width / 360
+    return im.crop([round(v * k) for v in (x, y, x + w, y + w * 1.25)]).resize((576, 720), Image.LANCZOS)
 
 def salvar(im, nome, q=82):
     os.makedirs(os.path.dirname(os.path.join(A, nome)), exist_ok=True)
@@ -85,10 +93,10 @@ def main():
         salvar(recortar(post(c, k), 1000, 1250, dy), f'sobre-{i + 1}.webp', 84)
     for i, (c, k, dy) in enumerate(CIC_POSTS):
         salvar(recortar(post(c, k), 800, 1000, dy), f'cic/post-{i + 1}.webp')
-    for i, n in enumerate(CIC_HL):
-        salvar(recortar(os.path.join(R, 'hl', f'cic_{n:02d}.jpg'), 360, 640), f'cic/{i + 1:02d}.webp', 80)
-    for i, n in enumerate(DISP_HL):
-        salvar(recortar(os.path.join(R, 'hl', f'disponiveis_{n:02d}.jpg'), 640, 1138), f'disp/{i + 1:02d}.webp', 80)
+    for pasta, nome, lista in (('cic', 'cic', CIC_HL), ('disp', 'disponiveis', DISP_HL)):
+        for f in glob.glob(os.path.join(A, pasta, '[0-9]*.webp')): os.remove(f)
+        for i, (n, x, y, w) in enumerate(lista):
+            salvar(story(os.path.join(R, 'hl', f'{nome}_{n:02d}.jpg'), x, y, w), f'{pasta}/{i + 1:02d}.webp', 82)
     json.dump(dados, open(os.path.join(R, 'imagens.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('ok', len(OBRAS), 'obras')
 

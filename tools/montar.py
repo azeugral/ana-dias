@@ -29,8 +29,8 @@ def trilho(pasta, qtd, alt, w, h):
 def main():
     s = open(os.path.join(AQUI, 'modelo.html'), encoding='utf-8').read()
     s = s.replace('{{OBRAS}}', obras()).replace('{{HORAS}}', horas())
-    s = s.replace('{{CIC}}', trilho('cic', len(P.CIC_HL), 'Tatuagem da Ana cicatrizada, enviada por cliente', 360, 640))
-    s = s.replace('{{DISP}}', trilho('disp', len(P.DISP_HL), 'Arte disponível desenhada pela Ana', 640, 1138))
+    s = s.replace('{{CIC}}', trilho('cic', len(P.CIC_HL), 'Tatuagem da Ana cicatrizada, enviada por cliente', 576, 720))
+    s = s.replace('{{DISP}}', trilho('disp', len(P.DISP_HL), 'Arte disponível desenhada pela Ana', 576, 720))
     open(os.path.join(SITE, 'index.html'), 'w', encoding='utf-8', newline='\n').write(s)
     print('index.html ok')
 
